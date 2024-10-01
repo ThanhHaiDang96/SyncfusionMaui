@@ -103,7 +103,7 @@
                                    x:Name="ImageEditor"
                                    x:FieldModifier="public"
                                    Background="#EFF3F6"
-                                   Source="{Binding Source,Converter={StaticResource ImageSourceConverter}}"
+                                   Source="{Binding Sources,Converter={StaticResource ImageSourceConverter}}"
                                    HeightRequest="{OnPlatform WinUI=234,MacCatalyst=234}"
                                    AutoGenerateToolbarItems="False"
                                    ShowToolbar="True">
@@ -201,8 +201,10 @@
         </Grid>
       </Grid>
       <Grid Grid.Row="2"
-            ColumnDefinitions="Auto,Auto">
-        <Grid Grid.Column="1"
+            ColumnDefinitions="Auto,Auto"
+            ColumnSpacing="10"
+            Margin="10,0,0,10">
+        <Grid Grid.Column="0"
               HorizontalOptions="End">
           <buttons:SfButton Text="Cancel"
                             HorizontalOptions="Center"
@@ -212,11 +214,12 @@
           </buttons:SfButton>
         </Grid>
 
-        <Grid Grid.Column="2"
+        <Grid Grid.Column="1"
               HorizontalOptions="End">
           <buttons:SfButton Text="OK"
                             VerticalOptions="Center"
-                            Command="{Binding OkCommand}">
+                            Command="{Binding OkCommand}"
+                            CommandParameter="{Binding Source={x:Reference ImageEditor}}">
 
           </buttons:SfButton>
         </Grid>
