@@ -1,0 +1,84 @@
+﻿<?xml version="1.0"
+      encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pdfViewer="clr-namespace:Syncfusion.Maui.PdfViewer;assembly=Syncfusion.Maui.PdfViewer"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             xmlns:behaviors="clr-namespace:SyncfusionIssue.Behaviors"
+             x:Class="SyncfusionIssue.MainPage">
+
+  <Grid Padding="30,0"
+        RowDefinitions="Auto, *, Auto"
+        RowSpacing="10">
+    <Grid ColumnDefinitions="Auto,Auto"
+          ColumnSpacing="10">
+      <buttons:SfButton Grid.Column="0"
+                        Text="Open"
+                        Command="{Binding OpenCommand}">
+
+      </buttons:SfButton>
+
+      <buttons:SfButton Grid.Column="1"
+                        Text="Save"
+                        Command="{Binding SaveCommand}">
+
+      </buttons:SfButton>
+    </Grid>
+    <Grid Grid.Row="1">
+      <Label x:Name="AnimatedLabel"
+             Text="Tap to Pdf page to add image!"
+             Opacity="0" 
+             FontSize="16"
+             HorizontalOptions="Center"
+             VerticalOptions="Start" 
+             Margin="10"
+             ZIndex="1"/>
+      <pdfViewer:SfPdfViewer x:Name="PdfViewer"
+                             x:FieldModifier="public"
+                             DocumentSource="{Binding PdfStream}"
+                             ShowToolbars="False"
+                             ShowScrollHead="False">
+        <pdfViewer:SfPdfViewer.Behaviors>
+          <behaviors:EventToCommandBehavior EventName="AnnotationAdded"
+                                            Command="{Binding PdfViewerAnnotationAddedCommand}" />
+          <behaviors:EventToCommandBehavior EventName="AnnotationSelected"
+                                            Command="{Binding PdfViewerAnnotationSelectedCommand}" />
+          <behaviors:EventToCommandBehavior EventName="AnnotationDeselected"
+                                            Command="{Binding PdfViewerAnnotationDeselectedCommand}" />
+          <behaviors:EventToCommandBehavior EventName="Tapped"
+                                            Command="{Binding PdfViewerTappedCommand}" />
+        </pdfViewer:SfPdfViewer.Behaviors>
+      </pdfViewer:SfPdfViewer>
+    </Grid>
+    
+
+    <Grid Grid.Row="2"
+          ColumnDefinitions="Auto,Auto,Auto"
+          ColumnSpacing="10"
+          Margin="0,0,0,10">
+      <buttons:SfButton Grid.Column="0"
+                        Text="Add Redaction Annotation"
+                        IsCheckable="True"
+                        IsChecked="{Binding IsRedactionMode}"
+                        Command="{Binding AddRedactionAnnotationCommand}">
+
+      </buttons:SfButton>
+
+      <buttons:SfButton Grid.Column="1"
+                        Text="Add Image"
+                        IsCheckable="True"
+                        IsChecked="{Binding IsAddImageMode}"
+                        Command="{Binding AddImageCommand}"
+                        CommandParameter="{Binding Source={x:Reference AnimatedLabel}}">
+      </buttons:SfButton>
+
+      <buttons:SfButton Grid.Column="2"
+                        Text="Show Custom Image"
+                        Command="{Binding ShowCustomImageCommand}">
+
+      </buttons:SfButton>
+    </Grid>
+  </Grid>
+
+</ContentPage>

@@ -1,0 +1,227 @@
+<?xml version="1.0"
+      encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:inputs="clr-namespace:Syncfusion.Maui.Inputs;assembly=Syncfusion.Maui.Inputs"
+             xmlns:sliders="clr-namespace:Syncfusion.Maui.Sliders;assembly=Syncfusion.Maui.Sliders"
+             xmlns:imageEditor="clr-namespace:Syncfusion.Maui.ImageEditor;assembly=Syncfusion.Maui.ImageEditor"
+             xmlns:behaviors="clr-namespace:SyncfusionIssue.Behaviors"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:Class="SyncfusionIssue.ImagePropertiesPopup"
+             WidthRequest="360"
+             HeightRequest="672">
+  <ContentPage.Resources>
+    <sliders:SliderThumbStyle x:Key="SfImageOptionSliderThumbStyle"
+                              Radius="8"
+                              Fill="{StaticResource Primary}"
+                              Stroke="{StaticResource Gray100Brush}"
+                              StrokeThickness="1">
+    </sliders:SliderThumbStyle>
+
+    <sliders:SliderTrackStyle x:Key="SfImageOptionSliderTrackStyle"
+                              ActiveFill="{StaticResource Secondary}"
+                              InactiveFill="{StaticResource Gray300Brush}"
+                              ActiveSize="4"
+                              InactiveSize="4">
+    </sliders:SliderTrackStyle>
+
+    <sliders:SliderThumbOverlayStyle x:Key="SfSliderThumbOverlayStyle"
+                                     Fill="{StaticResource Gray100Brush}"
+                                     Radius="0" />
+    <Style x:Key="SfImageOptionsSliderStyles"
+           TargetType="sliders:SfSlider">
+      <Setter Property="Background"
+              Value="Transparent" />
+      <Setter Property="WidthRequest"
+              Value="{OnPlatform WinUI=160,MacCatalyst=160}" />
+      <Setter Property="ThumbStyle"
+              Value="{StaticResource SfImageOptionSliderThumbStyle}" />
+      <Setter Property="TrackStyle"
+              Value="{StaticResource SfImageOptionSliderTrackStyle}" />
+      <Setter Property="ThumbOverlayStyle"
+              Value="{StaticResource SfSliderThumbOverlayStyle}" />
+    </Style>
+  </ContentPage.Resources>
+  <Border>
+
+    <Grid RowDefinitions="Auto, *, Auto">
+
+      <Grid Grid.Row="0">
+        <Label Text="Image Properties"
+               FontSize="14"
+               FontAttributes="Bold"
+               HorizontalOptions="Center"
+               VerticalOptions="Center" />
+      </Grid>
+
+      <Grid Grid.Row="1"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+
+        <Grid Grid.Row="1"
+              RowDefinitions="Auto,*, *"
+              ColumnDefinitions="*,*,Auto">
+
+          <Label Grid.Row="0"
+                 Text="Appearance"
+                 Margin="12,10,10,10" />
+
+          <ImageButton Grid.Column="3"
+                       Grid.Row="1"
+                       Margin="10,0,20,0"
+                       Source="rotate_image.png"
+                       Aspect="Center"
+                       WidthRequest="{OnPlatform WinUI=24,MacCatalyst=24}"
+                       HeightRequest="{OnPlatform WinUI=24,MacCatalyst=24}"
+                       MinimumHeightRequest="{OnPlatform WinUI=24,MacCatalyst=24}"
+                       MaximumHeightRequest="{OnPlatform WinUI=24,MacCatalyst=24}"
+                       MaximumWidthRequest="{OnPlatform WinUI=24,MacCatalyst=24}"
+                       MinimumWidthRequest="{OnPlatform WinUI=24,MacCatalyst=24}"
+                       Clicked="RotateImageOnClicked"
+                       ToolTipProperties.Text="Rotate">
+          </ImageButton>
+
+          <Grid Grid.Column="0"
+                Grid.Row="3"
+                ColumnDefinitions="*,*">
+            <ImageButton Grid.Column="0"
+                         Source="flip_vertical.png"
+                         Clicked="FlipHorizontal">
+
+            </ImageButton>
+            <ImageButton Grid.Column="1"
+                         Source="flip_horizontal.png"
+                         Clicked="FlipVertical">
+
+            </ImageButton>
+          </Grid>
+        </Grid>
+
+        <imageEditor:SfImageEditor Grid.Row="2"
+                                   x:Name="ImageEditor"
+                                   x:FieldModifier="public"
+                                   Background="#EFF3F6"
+                                   Source="{Binding Source,Converter={StaticResource ImageSourceConverter}}"
+                                   HeightRequest="{OnPlatform WinUI=234,MacCatalyst=234}"
+                                   AutoGenerateToolbarItems="False"
+                                   ShowToolbar="True">
+
+          <imageEditor:SfImageEditor.ToolbarSettings>
+
+            <imageEditor:ImageEditorToolbarSettings Background="#EFF3F6"
+                                                    ShowTooltip="True">
+            </imageEditor:ImageEditorToolbarSettings>
+
+          </imageEditor:SfImageEditor.ToolbarSettings>
+
+          <imageEditor:SfImageEditor.Toolbars>
+            <imageEditor:ImageEditorToolbar Orientaion="Horizontal"
+                                            Position="Start">
+
+              <imageEditor:ImageEditorToolbar.ToolbarItems>
+
+                <imageEditor:ImageEditorToolbarGroupItem Alignment="Start">
+                  <imageEditor:ImageEditorToolbarGroupItem.Items>
+                    <imageEditor:ImageEditorToolbarItem Name="Browse"
+                                                        ToolTipProperties.Text="Replace Image" />
+                  </imageEditor:ImageEditorToolbarGroupItem.Items>
+                </imageEditor:ImageEditorToolbarGroupItem>
+
+                <imageEditor:ImageEditorToolbarGroupItem Alignment="Start">
+                  <imageEditor:ImageEditorToolbarGroupItem.Items>
+                    <imageEditor:ImageEditorToolbarItem Name="Undo" />
+                    <imageEditor:ImageEditorToolbarItem Name="Redo" />
+                  </imageEditor:ImageEditorToolbarGroupItem.Items>
+                </imageEditor:ImageEditorToolbarGroupItem>
+
+                <imageEditor:ImageEditorToolbarGroupItem Alignment="End">
+                  <imageEditor:ImageEditorToolbarGroupItem.Items>
+                    <imageEditor:ImageEditorToolbarItem Name="Reset" />
+                    <imageEditor:ImageEditorToolbarItem Name="SaveEdit" />
+                  </imageEditor:ImageEditorToolbarGroupItem.Items>
+                </imageEditor:ImageEditorToolbarGroupItem>
+
+              </imageEditor:ImageEditorToolbar.ToolbarItems>
+            </imageEditor:ImageEditorToolbar>
+
+            <imageEditor:ImageEditorToolbar Orientaion="Horizontal"
+                                            Position="End">
+              <imageEditor:ImageEditorToolbar.ToolbarItems>
+                <imageEditor:ImageEditorToolbarGroupItem Alignment="Center">
+                  <imageEditor:ImageEditorToolbarGroupItem.Items>
+                    <imageEditor:ImageEditorToolbarItem Name="custom" />
+                    <imageEditor:ImageEditorToolbarItem Name="original" />
+                    <imageEditor:ImageEditorToolbarItem Name="square" />
+                  </imageEditor:ImageEditorToolbarGroupItem.Items>
+                </imageEditor:ImageEditorToolbarGroupItem>
+              </imageEditor:ImageEditorToolbar.ToolbarItems>
+            </imageEditor:ImageEditorToolbar>
+          </imageEditor:SfImageEditor.Toolbars>
+        </imageEditor:SfImageEditor>
+
+        <Grid Grid.Row="3"
+              Margin="10"
+              RowSpacing="20"
+              RowDefinitions="*, *"
+              ColumnDefinitions="2*,3*">
+          <Label Grid.Column="0"
+                 Grid.Row="0"
+                 Text="Brightness"
+                 FontSize="14">
+          </Label>
+
+          <Label Grid.Column="0"
+                 Grid.Row="1"
+                 Text="Contrast"
+                 FontSize="14">
+
+          </Label>
+
+          <sliders:SfSlider Grid.Column="1"
+                            Grid.Row="0"
+                            Style="{StaticResource SfImageOptionsSliderStyles}"
+                            Minimum="-100"
+                            Maximum="100"
+                            Interval="1"
+                            Value="{Binding Brightness}"
+                            ValueChanged="OnBrightnessValueChanged">
+          </sliders:SfSlider>
+
+          <sliders:SfSlider Grid.Column="1"
+                            Grid.Row="1"
+                            Style="{StaticResource SfImageOptionsSliderStyles}"
+                            Minimum="-100"
+                            Maximum="100"
+                            Interval="1"
+                            Value="{Binding Contrast}"
+                            ValueChanged="OnContrastValueChanged">
+          </sliders:SfSlider>
+        </Grid>
+      </Grid>
+      <Grid Grid.Row="2"
+            ColumnDefinitions="Auto,Auto">
+        <Grid Grid.Column="1"
+              HorizontalOptions="End">
+          <buttons:SfButton Text="Cancel"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            Command="{Binding CancelCommand}">
+
+          </buttons:SfButton>
+        </Grid>
+
+        <Grid Grid.Column="2"
+              HorizontalOptions="End">
+          <buttons:SfButton Text="OK"
+                            VerticalOptions="Center"
+                            Command="{Binding OkCommand}">
+
+          </buttons:SfButton>
+        </Grid>
+      </Grid>
+    </Grid>
+
+  </Border>
+</ContentPage>
